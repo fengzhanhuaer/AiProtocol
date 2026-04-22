@@ -1,0 +1,63 @@
+{
+  "default_encoding": "utf-8",
+  "rules": [
+    {
+      "glob": "*.c",
+      "encoding": "gbk"
+    },
+    {
+      "glob": "*.cpp",
+      "encoding": "gbk"
+    },
+    {
+      "glob": "*.h",
+      "encoding": "gbk"
+    },
+    {
+      "glob": "*.hpp",
+      "encoding": "gbk"
+    },
+    {
+      "glob": "*.inl",
+      "encoding": "gbk"
+    },
+    {
+      "glob": "*.md",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.txt",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.json",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.yml",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.yaml",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.py",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "*.cmake",
+      "encoding": "utf-8"
+    },
+    {
+      "glob": "CMakeLists.txt",
+      "encoding": "utf-8"
+    }
+  ],
+  "exclude": [
+    ".git/**",
+    ".ai_patch_backups/**",
+    "build*/**",
+    "x64/**"
+  ]
+}
