@@ -1,62 +1,95 @@
 {
+  "version": 2,
   "default_encoding": "utf-8",
+  "default_bom": "none",
+  "default_newline": "preserve",
   "rules": [
     {
       "glob": "*.c",
-      "encoding": "gbk"
+      "encoding": "gbk",
+      "bom": "preserve",
+      "newline": "preserve"
     },
     {
       "glob": "*.cpp",
-      "encoding": "gbk"
+      "encoding": "gbk",
+      "bom": "preserve",
+      "newline": "preserve"
     },
     {
       "glob": "*.h",
-      "encoding": "gbk"
+      "encoding": "gbk",
+      "bom": "preserve",
+      "newline": "preserve"
     },
     {
       "glob": "*.hpp",
-      "encoding": "gbk"
+      "encoding": "gbk",
+      "bom": "preserve",
+      "newline": "preserve"
     },
     {
       "glob": "*.inl",
-      "encoding": "gbk"
+      "encoding": "gbk",
+      "bom": "preserve",
+      "newline": "preserve"
     },
     {
       "glob": "*.md",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.txt",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.json",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.yml",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.yaml",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.py",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "*.cmake",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     },
     {
       "glob": "CMakeLists.txt",
-      "encoding": "utf-8"
+      "encoding": "utf-8",
+      "bom": "none",
+      "newline": "preserve"
     }
   ],
   "exclude": [
     ".git/**",
     ".ai_patch_backups/**",
+    ".encoding_patch_backups/**",
+    ".encoding_patch_reports/**",
+    "**/__pycache__/**",
+    "*.pyc",
     "build*/**",
     "x64/**"
   ]

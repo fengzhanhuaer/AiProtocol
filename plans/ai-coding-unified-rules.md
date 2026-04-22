@@ -2,7 +2,7 @@
 
 ## 1. 目标
 
-建立一份可直接执行的统一规则，约束AI架构师、AI编码者、AI测试者在同一任务中的协作行为，避免重复强调要求。
+建立一份可直接执行的统一规则，约束AI架构师、AI编码者、AI测试者在同一任务中的协作行为，避免重复强调要求，并确保文件与文档编码治理与仓库内可执行脚本保持一致。
 
 ## 2. 适用角色
 
@@ -45,7 +45,12 @@
    - 该规范下的阶段文档仅记录治理信息与结论。
    - 不承载代码内容。
    - 若需引用实现细节，仅允许提交链接与差异摘要。
-   - 文件与文档编码治理仅以`tools/encoding_safe_patch.py`与`tools/encoding_ci_gate.py`可执行能力为准，不引入编辑器、pre-commit、Git其他策略。
+   - 文件与文档编码治理仅以`tools/encoding_safe_patch.py`、`tools/encoding_ci_gate.py`、`tools/encoding_policy_lint.py`可执行能力为准，不引入编辑器、pre-commit、Git其他策略。
+
+6. 默认强约束与豁免控制
+   - `tools/encoding_safe_patch.py`默认启用空变更失败语义，等效于`--fail-on-empty`。
+   - `tools/encoding_ci_gate.py`默认启用BOM校验语义，等效于`--check-bom`。
+   - 如需临时豁免，必须显式使用`--allow-empty`或`--no-check-bom`，并在阶段文档与跟踪表中记录审批依据、责任人、有效期。
 
 ## 4. 角色规则
 
@@ -57,6 +62,7 @@
 - 输出总体设计、单元设计、接口定义，形成可实施设计基线。
 - 将编码与测试任务拆解为执行单元包。
 - 建立并维护需求跟踪表初版。
+- 在设计阶段定义编码门禁执行策略：`encoding_policy_lint`执行口径、`encoding_ci_gate`参数口径、豁免审批口径。
 - 输出必须可直接驱动编码与测试执行。
 
 架构师最低输出清单
@@ -73,7 +79,10 @@
 
 - 严格按执行单元包实施。
 - 必须按`tools/encoding-policy.json`解析得到的文件编码实施，不得擅自变更。
-- 涉及混合编码文件（如历史GBK C/C++文件）修改时，必须使用`tools/encoding_safe_patch.py`执行，禁止以不明编码直接覆盖写入。
+- 涉及混合编码文件修改时，必须使用`tools/encoding_safe_patch.py`执行，禁止以不明编码直接覆盖写入。
+- 必须优先执行`run --mode dry-run`并保留报告，确认后再执行`run --mode apply`。
+- 可使用操作类型：`replace`、`insert_before`、`insert_after`、`delete`、`regex_replace`、`line_replace`。
+- 必须保存补丁执行证据：命令、报告路径、`backup_dir`、必要时`rollback`记录。
 - 每项实现必须映射到需求编号。
 - 同步更新需求跟踪表中的编码状态。
 
@@ -92,6 +101,9 @@
 - 按测试单元包执行验证与回归。
 - 每项测试必须映射到需求编号。
 - 必须执行或核验`tools/encoding_ci_gate.py`门禁结果，并将结论写入测试阶段文档。
+- 必须执行或核验`tools/encoding_policy_lint.py`策略风险检查结果。
+- 二进制文件处理口径需显式声明：`--skip-binary`或`--strict-binary`。
+- 如执行`--no-check-bom`，必须核验审批记录完整。
 - 同步更新需求跟踪表中的测试状态与未通过处置状态。
 
 测试者核查失败处理
@@ -114,16 +126,18 @@
 - S2 架构设计
   - 输出关键选型结论、总体设计、单元设计、接口定义、执行单元包、映射关系。
   - 确认编码基线来源为`tools/encoding-policy.json`，若有变更需先更新policy并登记依据。
+  - 确认默认强约束与豁免审批口径：`--fail-on-empty`、`--check-bom`、`--allow-empty`、`--no-check-bom`。
   - 更新需求跟踪表设计映射。
 
 - S3 编码与自测
   - 输出实现清单、编码阶段文档、自测结果。
   - 涉及混合编码文件修改时，使用`tools/encoding_safe_patch.py`并保留dry-run/apply报告证据。
+  - 若apply后需恢复，执行`rollback`并记录恢复报告。
   - 更新需求跟踪表编码状态。
 
 - S4 测试与修复验证
   - 输出测试记录、测试阶段文档、回归结论。
-  - 执行或核验`tools/encoding_ci_gate.py`并记录报告或控制台摘要。
+  - 执行或核验`tools/encoding_policy_lint.py`与`tools/encoding_ci_gate.py`并记录报告或控制台摘要。
   - 更新需求跟踪表测试状态。
 
 - S5 复盘与回灌
@@ -164,12 +178,16 @@
   - 总体设计、单元设计、接口定义完整。
   - 执行单元包与映射关系完整。
   - 已确认编码基线来源为`tools/encoding-policy.json`，若发生变更已记录并可追溯。
+  - 已定义默认强约束与豁免审批流程。
+  - 已定义`encoding_policy_lint`与`encoding_ci_gate`执行参数口径。
   - 架构阶段文档中的工作依据与规则传递声明完整。
 
 - G3 编码核查门
   - 实现清单完整。
   - 编码阶段文档统一最小内容完整。
   - 编码实现文件与`tools/encoding-policy.json`解析得到的期望编码一致。
+  - 涉及文件改写时已提供`encoding_safe_patch` dry-run/apply报告证据。
+  - 若变更失败或需恢复，已提供`rollback`证据。
   - 编码阶段文档中的工作依据与规则传递声明完整。
   - 跟踪表编码状态与实现清单一致。
 
@@ -177,7 +195,9 @@
   - 测试记录与回归结论完整。
   - 测试阶段文档统一最小内容完整。
   - 测试阶段文档中的工作依据与规则传递声明完整。
-  - `tools/encoding_ci_gate.py`门禁执行通过，失败项已清零。
+  - `encoding_policy_lint`已执行，风险结论与处置动作已记录。
+  - `encoding_ci_gate`门禁执行通过，失败项已清零。
+  - 如使用`--no-check-bom`，审批与豁免记录完整。
   - 跟踪表测试状态与测试记录一致。
 
 - G5 复盘门
@@ -188,7 +208,8 @@
   - 适用时点：任一阶段工作标记为“已完成”后立即执行。
   - 检查当前阶段产物是否符合本规则的全局强制规则与对应角色规则。
   - 核验阶段文档是否显式包含工作依据与规则传递声明，以及统一最小内容。
-  - 核验文件与文档编码是否按`tools/encoding-policy.json`执行，并具备`tools/encoding_safe_patch.py`与`tools/encoding_ci_gate.py`相关证据。
+  - 核验文件与文档编码是否按`tools/encoding-policy.json`执行，并具备`tools/encoding_safe_patch.py`、`tools/encoding_ci_gate.py`、`tools/encoding_policy_lint.py`相关证据。
+  - 核验豁免参数使用是否存在审批记录与有效期约束。
   - 核验需求跟踪表的状态、责任角色、更新时间是否已同步。
   - 不符合时判定为不通过，状态标记为阻塞并退回当前阶段整改；整改后重新过门禁。
 
@@ -205,36 +226,52 @@
 
 ## 8. 执行口径
 
-当用户提出新需求时，三类AI必须先对照本规则执行，不得跳过文档落盘、跟踪表更新、编码门禁核查与阶段门禁判定，且所有阶段流转以架构师门禁判定为准。任一阶段文档未显式写明工作依据与规则传递声明时，视为门禁不通过并退回上一门禁重审。任一阶段工作标记完成后，必须立即执行G6规则符合性门；未通过不得进入下一阶段。
+当用户提出新需求时，三类AI必须先对照本规则执行，不得跳过文档落盘、跟踪表更新、编码门禁核查与阶段门禁判定，且所有阶段流转以架构师门禁判定为准。任一阶段文档未显式写明工作依据与规则传递声明时，视为门禁不通过并退回上一门禁重审。任一阶段工作标记完成后，必须立即执行G6规则符合性门；未通过不得进入下一阶段。默认强约束`--fail-on-empty`与`--check-bom`必须生效，除非存在显式豁免参数与审批证据。
 
 ## 9. 文件与文档编码统一规则
 
 1. 编码基线唯一来源
    - 仓库文件与文档编码基线以`tools/encoding-policy.json`为唯一来源。
    - 编码解析优先级：`rules`中glob映射优先，其次`default_encoding`。
-   - 未在policy声明的扩展名或路径模式，按`default_encoding`执行。
+   - policy v2字段包含`version`、`default_encoding`、`default_bom`、`default_newline`、`rules`、`exclude`。
+   - 若policy缺少`version`，按兼容模式视作v1并补齐默认BOM/newline语义。
 
 2. 文件与文档编码分类
    - 历史C/C++相关文件（如`.c`、`.cpp`、`.h`、`.hpp`、`.inl`）按policy映射执行（当前基线为`gbk`）。
    - 文档与脚本类文件（如`.md`、`.txt`、`.json`、`.yml`、`.yaml`、`.py`、`.cmake`、`CMakeLists.txt`）按policy映射执行（当前基线为`utf-8`）。
+   - BOM与换行策略按`bom`与`newline`字段执行。
 
 3. 混合编码文件安全写入规则
    - 涉及混合编码文件修改时，必须使用`tools/encoding_safe_patch.py`执行文本级增删改。
-   - 允许操作：`replace`、`insert_before`、`insert_after`、`delete`。
-   - 执行模式：`dry-run`与`apply`；`apply`必须先备份再写回原编码字节。
-   - 编码一致性证据应包含脚本JSON报告或可追溯等效记录。
+   - 支持子命令：`run`、`rollback`。
+   - 支持操作：`replace`、`insert_before`、`insert_after`、`delete`、`regex_replace`、`line_replace`。
+   - `run`执行模式：`dry-run`与`apply`；`apply`必须先备份再写回，默认原子写入。
+   - `dry-run`需输出差异预览并形成JSON报告。
+   - 默认空变更失败；如确需放行，必须显式使用`--allow-empty`并记录审批。
 
 4. CI编码门禁规则
    - 阶段放行前必须执行或核验`tools/encoding_ci_gate.py`结果。
-   - 门禁按policy推导期望编码并逐文件校验解码。
-   - 任一文件解码失败即判定编码不通过，禁止流转下一阶段。
+   - 支持输入模式：`--paths`、`--paths-from-file`、`--changed-from-git --git-base`。
+   - 默认启用BOM校验；如确需关闭，必须显式使用`--no-check-bom`并记录审批。
+   - 可选启用newline校验：`--check-newline`。
+   - 二进制文件处理必须显式声明：`--skip-binary`或`--strict-binary`。
+   - 任一文件解码失败、BOM不匹配或策略冲突未处置，均判定门禁不通过。
 
-5. 变更控制
-   - 新增扩展名、目录模式或编码映射时，必须先更新`tools/encoding-policy.json`，再进入实现与测试。
+5. 策略质量门禁规则
+   - `tools/encoding_policy_lint.py`用于识别策略质量风险，至少覆盖：
+     - `duplicate_glob`
+     - `unreachable_rule`
+     - `exclude_rule_conflict`
+     - `order_shadow_risk`
+   - 在严格模式`--strict`下，warning视为失败。
+   - 门禁失败时必须修订policy或补充处置并重新核验。
+
+6. 变更控制
+   - 新增扩展名、目录模式、编码/BOM/换行映射时，必须先更新`tools/encoding-policy.json`，再进入实现与测试。
    - 未更新policy即执行编码变更，视为规则不符合并触发门禁失败。
 
-6. 非范围声明
-   - 本规则编码章节仅约束安全写入脚本与CI门禁脚本可执行能力。
+7. 非范围声明
+   - 本规则编码章节仅约束safe patch、ci gate、policy lint可执行能力。
    - 不包含本地编辑器设置，不包含pre-commit约束，不包含Git其他编码策略。
 
 ## 10. 内嵌模板 规则内直接复用
@@ -262,6 +299,12 @@
 - 结论记录:
 
 ## 关键选型与取舍
+
+## 编码策略口径
+- policy路径:
+- lint执行参数:
+- ci_gate执行参数:
+- 豁免审批口径:
 
 ## 总体设计
 
@@ -302,6 +345,18 @@
 
 ## 变更点清单
 
+## 补丁执行证据
+- dry-run命令:
+- dry-run报告:
+- apply命令:
+- apply报告:
+- backup目录:
+- rollback记录:
+
+## 豁免记录
+- 是否使用 --allow-empty:
+- 审批依据:
+
 ## 自测结果
 
 ## 待测试移交项
@@ -330,6 +385,15 @@
 - 结论记录:
 
 ## 测试单元包编号与需求编号映射
+
+## lint与编码门禁证据
+- lint命令与报告:
+- ci_gate命令与报告:
+- 二进制策略:
+
+## 豁免记录
+- 是否使用 --no-check-bom:
+- 审批依据:
 
 ## 测试记录与复现证据
 
