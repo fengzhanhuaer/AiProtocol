@@ -18,4 +18,4 @@ Supported operations:
 
 ## Rule
 
-Use only [`encoding_safe_patch.py`](encoding_tools/encoding_safe_patch.py) for document add / delete / modify.
+Use [`encoding_safe_patch.py`](encoding_tools/encoding_safe_patch.py) only for C/C++ source files (`.c`, `.cc`, `.cpp`, `.cxx`, `.h`, `.hpp`). Other source files do not require this interface.

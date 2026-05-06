@@ -53,8 +53,8 @@
 - Code 对源代码执行新增、删除、修改前，必须确认目标文件存在于 `doc/Architect/code-task-package-需求后缀.md`。
 - Code 对源代码执行新增、删除、修改前，必须确认操作类型存在于 `doc/Architect/code-task-package-需求后缀.md`。
 - Code 对源代码执行新增、删除、修改时，必须使用 `encoding_tools/README.md` 描述的接口。
-- Code 对源代码执行新增、删除、修改时，必须优先使用 `encoding_tools/encoding_safe_patch.py`。
-- Code 禁止直接用普通编辑方式修改源代码。
+- Code 对 C/C++ 源代码（`.c`、`.cc`、`.cpp`、`.cxx`、`.h`、`.hpp`）执行新增、删除、修改时，必须使用 `encoding_tools/encoding_safe_patch.py`。
+- Code 对非 C/C++ 源代码执行新增、删除、修改时，可直接编辑，不强制使用 `encoding_tools/encoding_safe_patch.py`。
 - Code 必须记录修改接口、配置文件、执行报告、影响文件、自测结果。
 
 ## 3. 文档规则
@@ -267,8 +267,8 @@
 
 ## 源码修改规则
 - 必须使用 encoding_tools/README.md 描述的接口。
-- 必须优先使用 encoding_tools/encoding_safe_patch.py。
-- 禁止直接普通编辑源代码。
+- 对 C/C++ 源代码（`.c`、`.cc`、`.cpp`、`.cxx`、`.h`、`.hpp`）必须使用 encoding_tools/encoding_safe_patch.py。
+- 对非 C/C++ 源代码可直接编辑，不强制使用 encoding_tools/encoding_safe_patch.py。
 
 ## 交付物
 -
