@@ -28,7 +28,7 @@ try:
         resolve_spec,
     )
 except ModuleNotFoundError:
-    from tools.encoding_policy_core import (
+    from encoding_tools.encoding_policy_core import (
         BOM_NONE,
         BOM_PRESERVE,
         BOM_UTF8_SIG,
@@ -122,7 +122,7 @@ def _newline_error(expected: str, actual: str) -> Optional[str]:
 def _suggestion(reason: str, rel_path: str) -> str:
     if "decode failed" in reason:
         return (
-            f"Check policy encoding mapping and modify file with tools/encoding_safe_patch.py "
+            f"Check policy encoding mapping and modify file with encoding_tools/encoding_safe_patch.py "
             f"instead of direct overwrite: {rel_path}"
         )
     if "bom mismatch" in reason:
@@ -138,7 +138,7 @@ def main(argv: Sequence[str]) -> int:
     parser = argparse.ArgumentParser(
         description="CI encoding gate: verify file bytes by encoding policy with optional BOM/newline checks."
     )
-    parser.add_argument("--policy", default="tools/encoding-policy.json", help="encoding policy json path")
+    parser.add_argument("--policy", default="encoding_tools/encoding-policy.json", help="encoding policy json path")
     parser.add_argument("--paths", nargs="+", default=[], help="scan paths under workspace")
     parser.add_argument("--paths-from-file", default=None, help="read scan paths from utf-8 file")
     parser.add_argument("--changed-from-git", action="store_true", help="scan changed files from git diff")

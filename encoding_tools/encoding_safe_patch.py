@@ -33,7 +33,7 @@ try:
         resolve_spec,
     )
 except ModuleNotFoundError:
-    from tools.encoding_policy_core import (
+    from encoding_tools.encoding_policy_core import (
         BOM_CHOICES,
         NEWLINE_CHOICES,
         NEWLINE_LF,
@@ -574,7 +574,7 @@ def execute_run(args: argparse.Namespace) -> int:
     if not isinstance(config_obj, dict):
         raise PatchError("patch config root must be object")
 
-    policy_ref = args.policy or config_obj.get("policy") or "tools/encoding-policy.json"
+    policy_ref = args.policy or config_obj.get("policy") or "encoding_tools/encoding-policy.json"
     if not isinstance(policy_ref, str) or not policy_ref:
         raise PatchError("policy path must be non-empty string")
 

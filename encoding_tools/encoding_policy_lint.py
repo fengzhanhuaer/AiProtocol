@@ -21,7 +21,7 @@ try:
         to_relative,
     )
 except ModuleNotFoundError:
-    from tools.encoding_policy_core import (
+    from encoding_tools.encoding_policy_core import (
         Policy,
         PolicyError,
         collect_files_from_paths,
@@ -199,7 +199,7 @@ def _save_report(path: Path, payload: Dict[str, Any]) -> None:
 
 def main(argv: Sequence[str]) -> int:
     parser = argparse.ArgumentParser(description="Lint encoding policy for overlap/unreachable/risk findings")
-    parser.add_argument("--policy", default="tools/encoding-policy.json", help="policy path")
+    parser.add_argument("--policy", default="encoding_tools/encoding-policy.json", help="policy path")
     parser.add_argument("--paths", nargs="+", default=["."], help="scan paths")
     parser.add_argument("--report", default=None, help="optional report json")
     parser.add_argument("--strict", action="store_true", help="treat warnings as failure")
