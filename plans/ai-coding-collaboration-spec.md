@@ -1,5 +1,5 @@
-# 已迁移
+# 已废弃
 
-`plans/ai-coding-collaboration-spec.md` 已废弃。
+本文件已废弃。
 
-请以后仅使用 [`doc/ai-coding-collaboration.md`](doc/ai-coding-collaboration.md) 作为协作规则正文。
+唯一协作规则正文为 [`doc/ai-coding-collaboration.md`](../doc/ai-coding-collaboration.md)。
