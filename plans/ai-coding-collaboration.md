@@ -4,8 +4,6 @@
 
 - 只允许使用 Architect 与 Code 两个角色。
 - 禁止使用 Debug、Orchestrator、Ask 角色定义或职责。
-- 规则文件固定为：`plans/ai-coding-collaboration-spec.md`。
-- 核心需求文件固定为：`plans/ai-coding-core-requirements.md`。
 - 输出目录固定为：`doc/Architect/` 与 `doc/Code/`。
 - 编码工具目录固定为：`encoding_tools/`。
 - 任意输出必须落盘为可复用文档。
