@@ -2,7 +2,7 @@
 
 - 版本: v1.0
 - 生效日期: 2026-05-06
-- 最近变更: 清理草案引用；确立本文档为唯一协作规则正文；补充命名示例。
+- 最近变更: 清理草案引用；确立本文档为唯一协作规则正文；补充需求前缀命名示例。
 
 ## 0. 启动规则
 
@@ -12,11 +12,11 @@
 - 编码工具目录固定为：`encoding_tools/`。
 - 任意输出必须落盘为可复用文档。
 - 任意输出必须写入对应角色目录：`doc/Architect/` 或 `doc/Code/`。
-- 每个需求必须定义唯一需求后缀。
-- 需求后缀必须来自需求编号或需求名称。
-- 需求后缀必须追加到所有输出文档文件名末尾。
-- 文件名格式必须为：`文档类型-需求后缀.md`。
-- 命名示例：需求后缀为 `REQ-001` 时，需求文档必须命名为 `requirements-REQ-001.md`。
+- 每个需求必须定义唯一需求前缀。
+- 需求前缀必须来自需求编号或需求名称。
+- 需求前缀必须置于所有输出文档文件名前缀位置。
+- 文件名格式必须为：`需求前缀-文档类型.md`。
+- 命名示例：需求前缀为 `REQ-001` 时，需求文档必须命名为 `REQ-001-requirements.md`。
 - 禁止不同需求复用同一输出文档文件名。
 - 禁止只在对话中给出最终结论。
 - 无法创建输出目录时必须停止执行并记录阻塞原因。
@@ -26,13 +26,13 @@
 ## 1. Architect规则
 
 - Architect 必须输出以下文档：
-  - `doc/Architect/requirements-需求后缀.md`，必须使用附录B.1模板。
-  - `doc/Architect/architecture-需求后缀.md`，必须使用附录B.2模板。
-  - `doc/Architect/unit-design-需求后缀.md`，必须使用附录B.3模板。
-  - `doc/Architect/code-task-package-需求后缀.md`，必须使用附录B.4模板。
-  - `doc/Architect/requirement-trace-matrix-需求后缀.md`，必须使用附录B.5模板。
-  - `doc/Architect/interface-trace-matrix-需求后缀.md`，必须使用附录B.6模板。
-  - `doc/Architect/gate-decision-需求后缀.md`，必须使用附录B.7模板。
+  - `doc/Architect/需求前缀-requirements.md`，必须使用附录B.1模板。
+  - `doc/Architect/需求前缀-architecture.md`，必须使用附录B.2模板。
+  - `doc/Architect/需求前缀-unit-design.md`，必须使用附录B.3模板。
+  - `doc/Architect/需求前缀-code-task-package.md`，必须使用附录B.4模板。
+  - `doc/Architect/需求前缀-requirement-trace-matrix.md`，必须使用附录B.5模板。
+  - `doc/Architect/需求前缀-interface-trace-matrix.md`，必须使用附录B.6模板。
+  - `doc/Architect/需求前缀-gate-decision.md`，必须使用附录B.7模板。
 - Architect 必须负责门禁裁判。
 - Architect 必须输出门禁结论。
 - Architect 门禁结论只允许为：通过、驳回、有条件通过。
@@ -41,17 +41,17 @@
 
 ## 2. Code规则
 
-- Code 必须只按 Architect 的 `code-task-package-需求后缀.md` 执行。
+- Code 必须只按 Architect 的 `需求前缀-code-task-package.md` 执行。
 - Code 不得自行扩展任务范围。
 - Code 不得裁判门禁。
 - Code 必须输出以下文档：
-  - `doc/Code/requirement-trace-matrix-需求后缀.md`，必须使用附录C.1模板。
-  - `doc/Code/interface-trace-matrix-需求后缀.md`，必须使用附录C.2模板。
-  - `doc/Code/test-item-trace-matrix-需求后缀.md`，必须使用附录C.3模板。
-  - `doc/Code/defect-trace-matrix-需求后缀.md`，必须使用附录C.4模板。
-- Code 对源代码执行新增、删除、修改前，必须确认任务编号存在于 `doc/Architect/code-task-package-需求后缀.md`。
-- Code 对源代码执行新增、删除、修改前，必须确认目标文件存在于 `doc/Architect/code-task-package-需求后缀.md`。
-- Code 对源代码执行新增、删除、修改前，必须确认操作类型存在于 `doc/Architect/code-task-package-需求后缀.md`。
+  - `doc/Code/需求前缀-requirement-trace-matrix.md`，必须使用附录C.1模板。
+  - `doc/Code/需求前缀-interface-trace-matrix.md`，必须使用附录C.2模板。
+  - `doc/Code/需求前缀-test-item-trace-matrix.md`，必须使用附录C.3模板。
+  - `doc/Code/需求前缀-defect-trace-matrix.md`，必须使用附录C.4模板。
+- Code 对源代码执行新增、删除、修改前，必须确认任务编号存在于 `doc/Architect/需求前缀-code-task-package.md`。
+- Code 对源代码执行新增、删除、修改前，必须确认目标文件存在于 `doc/Architect/需求前缀-code-task-package.md`。
+- Code 对源代码执行新增、删除、修改前，必须确认操作类型存在于 `doc/Architect/需求前缀-code-task-package.md`。
 - Code 对源代码执行新增、删除、修改时，必须使用 `encoding_tools/README.md` 描述的接口。
 - Code 对 C/C++ 源代码（`.c`、`.cc`、`.cpp`、`.cxx`、`.h`、`.hpp`）执行新增、删除、修改时，必须使用 `encoding_tools/encoding_safe_patch.py`。
 - Code 对非 C/C++ 源代码执行新增、删除、修改时，可直接编辑，不强制使用 `encoding_tools/encoding_safe_patch.py`。
@@ -64,11 +64,11 @@
 - 所有输出文档必须遵守附录A公共模板规则。
 - 所有文档必须使用稳定编号。
 - 所有文档必须使用固定状态枚举：未开始、进行中、阻塞、已完成。
-- 所有文档文件名必须包含需求后缀。
-- 需求后缀在同一需求内必须完全一致。
-- 需求后缀在 Architect 输出与 Code 输出之间必须完全一致。
-- 需求后缀禁止使用空格。
-- 需求后缀禁止使用路径分隔符。
+- 所有文档文件名必须包含需求前缀。
+- 需求前缀在同一需求内必须完全一致。
+- 需求前缀在 Architect 输出与 Code 输出之间必须完全一致。
+- 需求前缀禁止使用空格。
+- 需求前缀禁止使用路径分隔符。
 - 所有矩阵必须保留需求编号。
 - 所有接口矩阵必须保留接口编号。
 - 所有测试项矩阵必须保留测试项编号。
@@ -86,8 +86,8 @@
 - Architect 是唯一门禁裁判。
 - Code 只能提交执行结果与证据。
 - Architect 裁判时必须检查所有必需文档是否存在。
-- Architect 裁判时必须检查所有文档是否使用需求后缀。
-- Architect 裁判时必须检查 Architect 与 Code 的需求后缀是否一致。
+- Architect 裁判时必须检查所有文档是否使用需求前缀。
+- Architect 裁判时必须检查 Architect 与 Code 的需求前缀是否一致。
 - Architect 裁判时必须检查需求编号是否一致。
 - Architect 裁判时必须检查接口编号是否一致。
 - Architect 裁判时必须检查 Code 是否使用 `encoding_tools/`。
@@ -102,20 +102,20 @@
 
 ## 5. 执行顺序
 
-1. Architect 定义需求后缀。
-2. Architect 按附录B.1输出带需求后缀的需求文档。
-3. Architect 按附录B.2输出带需求后缀的总体架构文档。
-4. Architect 按附录B.3输出带需求后缀的单元设计文档。
-5. Architect 按附录B.4输出带需求后缀的 Code 任务执行包文档。
-6. Architect 按附录B.5输出带需求后缀的需求跟踪矩阵文档。
-7. Architect 按附录B.6输出带需求后缀的关键接口跟踪矩阵文档。
+1. Architect 定义需求前缀。
+2. Architect 按附录B.1输出带需求前缀的需求文档。
+3. Architect 按附录B.2输出带需求前缀的总体架构文档。
+4. Architect 按附录B.3输出带需求前缀的单元设计文档。
+5. Architect 按附录B.4输出带需求前缀的 Code 任务执行包文档。
+6. Architect 按附录B.5输出带需求前缀的需求跟踪矩阵文档。
+7. Architect 按附录B.6输出带需求前缀的关键接口跟踪矩阵文档。
 8. Architect 按附录B.7裁判并输出门禁结论。
-9. Code 按带需求后缀的任务执行包执行。
+9. Code 按带需求前缀的任务执行包执行。
 10. Code 使用 encoding_tools 接口修改源代码。
-11. Code 按附录C.1输出带需求后缀的需求跟踪矩阵文档。
-12. Code 按附录C.2输出带需求后缀的关键接口跟踪矩阵文档。
-13. Code 按附录C.3输出带需求后缀的测试项跟踪矩阵文档。
-14. Code 按附录C.4输出带需求后缀的缺陷跟踪矩阵文档。
+11. Code 按附录C.1输出带需求前缀的需求跟踪矩阵文档。
+12. Code 按附录C.2输出带需求前缀的关键接口跟踪矩阵文档。
+13. Code 按附录C.3输出带需求前缀的测试项跟踪矩阵文档。
+14. Code 按附录C.4输出带需求前缀的缺陷跟踪矩阵文档。
 15. Architect 按附录B.7裁判并输出放行或阻塞结论。
 
 ## 6. 冲突规则
@@ -129,7 +129,7 @@
 - 所有模板必须明确写入 `AI协作规则`。
 - 所有模板必须明确写入 `后续工作传递声明`。
 - 所有模板必须保留 `需求编号`。
-- 所有模板必须保留 `需求后缀`。
+- 所有模板必须保留 `需求前缀`。
 - 所有模板必须保留 `当前角色`。
 - 所有模板必须保留 `工作依据文档`。
 - 所有模板必须保留 `状态`。
@@ -139,7 +139,7 @@
 
 ## 附录B. Architect文档模板
 
-### B.1 `doc/Architect/requirements-需求后缀.md`
+### B.1 `doc/Architect/需求前缀-requirements.md`
 
 ```md
 # 需求文档
@@ -147,7 +147,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -174,7 +174,7 @@
 -
 ```
 
-### B.2 `doc/Architect/architecture-需求后缀.md`
+### B.2 `doc/Architect/需求前缀-architecture.md`
 
 ```md
 # 总体架构文档
@@ -182,7 +182,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -211,7 +211,7 @@
 -
 ```
 
-### B.3 `doc/Architect/unit-design-需求后缀.md`
+### B.3 `doc/Architect/需求前缀-unit-design.md`
 
 ```md
 # 单元设计文档
@@ -219,7 +219,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -244,7 +244,7 @@
 -
 ```
 
-### B.4 `doc/Architect/code-task-package-需求后缀.md`
+### B.4 `doc/Architect/需求前缀-code-task-package.md`
 
 ```md
 # Code任务执行包文档
@@ -252,7 +252,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -280,7 +280,7 @@
 -
 ```
 
-### B.5 `doc/Architect/requirement-trace-matrix-需求后缀.md`
+### B.5 `doc/Architect/需求前缀-requirement-trace-matrix.md`
 
 ```md
 # 需求跟踪矩阵
@@ -288,7 +288,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -297,7 +297,7 @@
 |---|---|---|---|---|---|---|
 ```
 
-### B.6 `doc/Architect/interface-trace-matrix-需求后缀.md`
+### B.6 `doc/Architect/需求前缀-interface-trace-matrix.md`
 
 ```md
 # 关键接口跟踪矩阵
@@ -305,7 +305,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -314,7 +314,7 @@
 |---|---|---|---|---|---|---|---|---|
 ```
 
-### B.7 `doc/Architect/gate-decision-需求后缀.md`
+### B.7 `doc/Architect/需求前缀-gate-decision.md`
 
 ```md
 # 门禁裁判文档
@@ -322,7 +322,7 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Architect
 - 工作依据文档:
 - 状态:
@@ -335,7 +335,7 @@
 | 检查项 | 结果 | 证据 | 备注 |
 |---|---|---|---|
 | 必需文档存在 |  |  |  |
-| 需求后缀一致 |  |  |  |
+| 需求前缀一致 |  |  |  |
 | 需求编号一致 |  |  |  |
 | 接口编号一致 |  |  |  |
 | 模板字段完整 |  |  |  |
@@ -358,7 +358,7 @@
 
 ## 附录C. Code文档模板
 
-### C.1 `doc/Code/requirement-trace-matrix-需求后缀.md`
+### C.1 `doc/Code/需求前缀-requirement-trace-matrix.md`
 
 ```md
 # 需求跟踪矩阵
@@ -366,16 +366,16 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Code
-- 工作依据文档: doc/Architect/code-task-package-需求后缀.md
+- 工作依据文档: doc/Architect/需求前缀-code-task-package.md
 - 状态:
 
 | 需求编号 | 任务编号 | 实现文件 | 实现状态 | 自测状态 | 证据 | 备注 |
 |---|---|---|---|---|---|---|
 ```
 
-### C.2 `doc/Code/interface-trace-matrix-需求后缀.md`
+### C.2 `doc/Code/需求前缀-interface-trace-matrix.md`
 
 ```md
 # 关键接口跟踪矩阵
@@ -383,16 +383,16 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Code
-- 工作依据文档: doc/Architect/code-task-package-需求后缀.md
+- 工作依据文档: doc/Architect/需求前缀-code-task-package.md
 - 状态:
 
 | 接口编号 | 需求编号 | 实现文件 | 调用方 | 提供方 | 实现状态 | 证据 | 备注 |
 |---|---|---|---|---|---|---|---|
 ```
 
-### C.3 `doc/Code/test-item-trace-matrix-需求后缀.md`
+### C.3 `doc/Code/需求前缀-test-item-trace-matrix.md`
 
 ```md
 # 测试项跟踪矩阵
@@ -400,16 +400,16 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Code
-- 工作依据文档: doc/Architect/code-task-package-需求后缀.md
+- 工作依据文档: doc/Architect/需求前缀-code-task-package.md
 - 状态:
 
 | 测试项编号 | 需求编号 | 任务编号 | 测试目标 | 测试方法 | 结果 | 证据 | 备注 |
 |---|---|---|---|---|---|---|---|
 ```
 
-### C.4 `doc/Code/defect-trace-matrix-需求后缀.md`
+### C.4 `doc/Code/需求前缀-defect-trace-matrix.md`
 
 ```md
 # 缺陷跟踪矩阵
@@ -417,9 +417,9 @@
 - 适用规则: AI协作规则
 - 后续工作传递声明: 本文档必须传递给后续阶段与后续角色。
 - 需求编号:
-- 需求后缀:
+- 需求前缀:
 - 当前角色: Code
-- 工作依据文档: doc/Architect/code-task-package-需求后缀.md
+- 工作依据文档: doc/Architect/需求前缀-code-task-package.md
 - 状态:
 
 | 缺陷编号 | 需求编号 | 测试项编号 | 缺陷描述 | 严重级别 | 修复状态 | 修复证据 | 备注 |
