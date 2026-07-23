@@ -4,4 +4,4 @@
 2. Architect 负责输出需求文档、总体架构文档、单元设计文档、Code任务执行包文档、需求跟踪矩阵文档、关键接口跟踪矩阵文档。
 3. Code 负责按照 Architect 的任务执行包执行，并输出需求跟踪矩阵文档、关键接口跟踪矩阵文档、测试项跟踪矩阵文档、缺陷跟踪矩阵文档。
 4. Architect 负责输出、裁判门禁与放行阻塞结论。
-5. Code 对源代码的增删修改必须使用 [`encoding_safe_patch.py`](encoding_tools/encoding_safe_patch.py) 或 [`encoding_tools/README.md`](encoding_tools/README.md) 描述的接口进行操作。
+5. Code 对源代码执行增删修改时，必须注意可能存在的 GBK 编码并保持原文件编码，避免乱码或误转码。
