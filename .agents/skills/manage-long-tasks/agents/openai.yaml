@@ -1,0 +1,4 @@
+interface:
+  display_name: "管理长任务"
+  short_description: "用户可用启动或启用需求跟踪唤醒中文长任务账本及恢复流程"
+  default_prompt: "使用 $manage-long-tasks 启动需求跟踪，建立包含追踪、决策、缺陷、回滚和质量门禁的中文任务账本。"
